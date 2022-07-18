@@ -19,9 +19,25 @@ Nó chú trọng vào tài nguyên hệ thống (tệp văn bản, ảnh, âm th
 + PUT (UPDATE): Cập nhật thông tin cho Resource.
 + DELETE (DELETE): Xoá một Resource.
 
++ POST/PUT/PATCH
+Điểm khác biệt giữ post và put đơn giản là put là idempotent còn post thì không, bạn sẽ nhận được thông báo lỗi khi gửi một request post với cùng 1 nội dung 2 lần nhưng put thì không, nó luôn trả về kết quả như nhau.
+post: tạo mới
+put: ghi đè(toàn bộ) hoặc tạo mới 1 resource
+patch: cập một 1 phần của resource
+
 2. XML và Json
 - JSON (hay tên gọi đầy đủ là JavaScript Object Notation) được sử dụng để lưu trữ thông tin một cách có tổ chức và dễ truy cập.
  JSON cung cấp bộ sưu tập dữ liệu mà con người có thể truy cập và đọc được.
 
 - XML (Extensible Markup Language) là ngôn ngữ đánh dấu được thiết kế để lưu trữ hoặc chuyển dữ liệu.
  Đáng nói là XML phân biệt chữ hoa và chữ thường.
+
+3. Docker:Docker là một nền tảng cho developers và sysadmin để develop, deploy và run application với container. 
+Nó cho phép tạo các môi trường độc lập và tách biệt để khởi chạy và phát triển ứng dụng và môi trường này được gọi là container.
+
+- Virtualization là gì? Containerlization là gì?
+
+4. Microservice : Microservices là một dạng của kiến trúc hướng dịch vụ,
+trong đó các ứng dụng được xây dựng như một tập hợp các dịch vụ nhỏ hơn khác nhau chứ không phải toàn bộ một ứng dụng. 
+Thay vì ứng dụng nguyên khối, bạn có một số ứng dụng độc lập có thể tự chạy
+và có thể được tạo bằng các ngôn ngữ lập trình hoặc mã hóa khác nhau.
