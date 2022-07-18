@@ -1,0 +1,27 @@
+Microservice + Docker + Restful API + XML và Json
+----------------------------------------------------
+1. Restful Api:
+
+- Web service có thể là một ứng dụng, nguồn dữ liệu, hoặc nền tảng công nghệ có khả năng truy cập qua mạng Internet với giao thưc HTTPs.
+- WS giúp Truy cập giao tiếp giữa các nền tảng phần mềm với nhau không quan tâm đến ngôn ngữ và loại thiết bị của nahu.
++ Truy cập qua mạng Internet, giao thức HTTP(s)
++ Định dạng dữ liệu phổ biến là JSON, XML,..
++ Giúp phát triển các hệ thống độc lập
++ 2 loại phổ biến SOAP vs REST.
+
+- RESTful API là một tiêu chuẩn dùng trong việc thiết kế API cho các ứng dụng web (thiết kế Web services) để tiện cho việc quản lý các resource. 
+Nó chú trọng vào tài nguyên hệ thống (tệp văn bản, ảnh, âm thanh, video, hoặc dữ liệu động…), bao gồm các trạng thái tài nguyên được định dạng và được truyền tải qua HTTP.
+
+- REST hoạt động chủ yếu dựa vào giao thức HTTP. Các hoạt động cơ bản nêu trên sẽ sử dụng những phương thức HTTP riêng.
+
++ GET (SELECT): Trả về một Resource hoặc một danh sách Resource.
++ POST (CREATE): Tạo mới một Resource.
++ PUT (UPDATE): Cập nhật thông tin cho Resource.
++ DELETE (DELETE): Xoá một Resource.
+
+2. XML và Json
+- JSON (hay tên gọi đầy đủ là JavaScript Object Notation) được sử dụng để lưu trữ thông tin một cách có tổ chức và dễ truy cập.
+ JSON cung cấp bộ sưu tập dữ liệu mà con người có thể truy cập và đọc được.
+
+- XML (Extensible Markup Language) là ngôn ngữ đánh dấu được thiết kế để lưu trữ hoặc chuyển dữ liệu.
+ Đáng nói là XML phân biệt chữ hoa và chữ thường.
