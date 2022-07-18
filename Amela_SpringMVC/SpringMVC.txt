@@ -1,0 +1,23 @@
+Nguyễn Cảnh Vinh
+CHỦ ĐỀ: SPRING MVC
+1.	 (Model-View-Controller)
+
+-	View: 
++ sẽ là lớp cho các thành phần có chức năng hiển thị, giao tiếp trực tiếp với người dùng.
++  Nhiệm vụ của các thành phần trong View là trình bày các dữ liệu từ Model đến người dùng cuối.
++ là các file JSP, html…
+-	Model: 
+          + là các thành phần có khả năng lưu trữ và vận chuyển thông tin. Quá trình gửi dữ liệu vào Model sẽ được thực hiện bởi Controller.
+               + các file POJO, Service, DAO thực hiện truy cập database, xử lý business
+
+-	Controller:  
+         + là các thành phần giúp cho việc xử lý logic các thao tác nghiệp vụ. Nhiệm vụ của Controller là lấy dữ liệu từ Model, xử lý dữ liệu, và cập nhật lại dữ liệu vào Model.
+              + là Dispatcher Controller, Handler Mapping, Controller – thực hiện điều hướn các request.
+2.	Các lợi ích của Spring MVC
+•	Các tầng trong Spring MVC độc lập nên việc unit test dễ dàng hơn.
+•	Phần view có thể tích hợp với nhiều Framework về UI như JSF, Freemarker, Themeleaf…
+•	Spring MVC base trên các POJO class nên các hành động của nó khá đơn giản
+•	Hỗ trợ cả Annotation và XML config giúp việc phát triển nhanh hơn và sạch hơn.
+•	Cung cấp việc phân chia một cách rõ ràng, linh hoạt giữa controller, service, data acces layer.
+
+

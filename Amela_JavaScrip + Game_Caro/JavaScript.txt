@@ -1,0 +1,29 @@
+	Kiến thức:
+•	Event loop, callback
+•	This trong javascript
+•	Object trong javascript
+•	Prototype trong javascrip
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1.	Event loop
++	Event Loop: là một Queue, tất cả cá event được push vào Queue này, mỗi khi một sự kiện được phát ra nó sẽ được push vào Queue. Trong Queue này, thứ tự thực hiện là vào trước thì sẽ được xử lí trước, vào sau thì được xử lí sau.
++	Về bản chất, vòng lặp sự kiện(event loop) sẽ kiểm tra xem ngăn xếp(call stack) cuộc gọi có trống không và nếu có, sẽ xem xét hàng đợi sự kiện (event queue).
++	Nếu có một cái gì đó trong đó, nó thêm nó vào ngăn xếp(call stack) cuộc gọi và thực hiện nó. 
++	Vòng lặp sự kiện(event loop) liên tục chạy cho đến khi hết ca (nội dung trình duyệt được tải / trình duyệt bị đóng). Event table theo dõi tất cả các sự kiện đã được kích hoạt và gửi chúng đến hàng đợi sự kiện(event queue) sẽ được thực thi.
+2. callback
+
++ Gọi lại là một function sẽ được thực thi sau khi một function khác đã được thực thi xong 
++ Trong Javascript, functions là objects,do đó nó có thể nhận tham số là function, và cũng có thể trả về một function. Vì vậy bất cứ function nào được truyền vào như một tham số và được gọi sau đó sẽ có tên là callback function.
+
+3.  This trong javaScrip
++ Trong lập trình hướng đối tượng thì this là một từ khóa dùng để trỏ đến đối tượng hiện tại, qua đó ta có thể truy cập đến những phương thức và thuộc tính trong đối tượng đó. Điều kiện là bạn sẽ phải đặt this trong phạm vi chương trình của đối tượng.
++ Tất cả các hàm của JavaScript đều có thuộc tính, giống như mọi đối tượng khác. Và khi một hàm được thực thi, nó sẽ có thuộc tính this - một biến với giá trị là đối tượng đã gọi hàm sử dụng this.
++ This luôn luôn tham chiếu (và có giá trị của) đối tượng - một đối tượng duy nhất  và nó thường được sử dụng bên trong hàm hay phương thức, mặc dù nó có thể dùng được một cách toàn cục bên ngoài hàm.
+
+4.Object trong javascript
++ object là tập hợp của các key và value. Với key gọi là thuộc tính, còn value là giá trị tương ứng của thuộc tính.
+
+5. Prototype trong javascrip
++ Prototype là cơ chế mà các object trong javascript kế thừa các tính năng từ một object khác. Tất cả các object trong javascript đều có một prototype, và các object này kế thừa các thuộc tính (properties) cũng như phương thức (methods) từ prototype của mình.
+
+
