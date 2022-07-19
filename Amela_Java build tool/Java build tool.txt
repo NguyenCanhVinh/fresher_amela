@@ -1,0 +1,25 @@
+Maven, Gradle
+
+--------------------------------------------------------------------------
+1. Maven
+- maven là chương trình hay là công cụ giúp chúng ta quản lý, xây dựng, phát triển,quản lý báo cáo, hay phiên bản, 
+quản lý việc tài liệu, và nhiều chức năng khác cho project thì tất cả đều có trong maven.
+Thay việc chúng ta build bằng tay, chungz ta phải clean thì chúng ta có thể dùng maven. thì tất cả công việc đều
+được maven đảm nhiệm.
+- Chỉ việc thông qua file cấu hình ở file pom
+- Tác dụng:
++ dowload và quản ý thưc viện của project 
+(Trước đây chũng ta muốn dùng một thư viên trên mạng chúng ta phải dowload file jar về 
+và chúng ta import file jar trong project và chúng ta clean project để sửa dụng. 
+thì maven project mọi công việc đảm nhiệm bởi maven và chỉ việc cấu hình fiel jar chúng ta muốn dowload và
+tự động import 
++ quản lý phiên bản buid, thông tin team, phiên bản
++ buil file jar, war.. theo cấu hình
+
+- Chu ky sống:
++ POM: xml file cấu hình
++ Build: tệp lệnh maven
++ Dependences: thư viện cần dùng trong project
++ Repository: nơi lưu trữ thue viện
++ plugins: libs cần chạy project
++ Profiles: build khac nhau.
