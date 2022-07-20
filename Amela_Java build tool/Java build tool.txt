@@ -1,6 +1,6 @@
 Maven, Gradle
 
---------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 1. Maven
 - maven là chương trình hay là công cụ giúp chúng ta quản lý, xây dựng, phát triển,quản lý báo cáo, hay phiên bản, 
 quản lý việc tài liệu, và nhiều chức năng khác cho project thì tất cả đều có trong maven.
@@ -23,3 +23,19 @@ tự động import
 + Repository: nơi lưu trữ thue viện
 + plugins: libs cần chạy project
 + Profiles: build khac nhau.
+
+----------------------------------------------------------------------------------------------------------------------
+- mvn clean
+- mvn site: buid ra một trang web mô tả
+- Default Build Lifecycle Phases
++ validate
++ compile
++ test
++ package
++ verify
++ install
++ deploy
+------------------------------------------------------------------------------------------------------------------
+Gradle
+
+java -jar
