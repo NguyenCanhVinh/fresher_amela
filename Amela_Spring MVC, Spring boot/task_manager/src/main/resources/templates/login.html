@@ -35,24 +35,11 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         Validator({
-            form: '#form-1',
-            formGroupSelector: '.form-group',
-            errorSelector: '.form-message',
-            rules: [
-                Validator.isRequired('#username', 'Vui lòng nhập tên đầy đủ'),
-                Validator.minLength('#password', 6),
-                Validator.isRequired('#password_confirmation'),
-                Validator.isConfirmed('#password_confirmation', function() {
-                    return document.querySelector('#form-1 #password').value;
-                }, 'Mật khẩu nhập không chính xác')
-            ],
-
-        });
-        Validator({
             form: '#form-2',
             formGroupSelector: '.form-group',
             errorSelector: '.form-message',
             rules: [
+                Validator.isEmail('#username'),
                 Validator.minLength('#password', 6),
             ],
 

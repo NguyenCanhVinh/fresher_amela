@@ -133,11 +133,6 @@ function Validator(options) {
 }
 
 
-
-// Định nghĩa rules
-// Nguyên tắc của các rules:
-// 1. Khi có lỗi => Trả ra message lỗi
-// 2. Khi hợp lệ => Không trả ra cái gì cả (undefined)
 Validator.isRequired = function (selector, message) {
     return {
         selector: selector,
@@ -152,7 +147,7 @@ Validator.isEmail = function (selector, message) {
         selector: selector,
         test: function (value) {
             var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-            return regex.test(value) ? undefined :  message || 'Trường này phải là email';
+            return regex.test(value) ? undefined :  message || 'Trường này phải là username';
         }
     };
 }
