@@ -142,11 +142,11 @@ Validator.isRequired = function (selector, message) {
     };
 }
 
-Validator.isEmail = function (selector, message) {
+Validator.isusername = function (selector, message) {
     return {
         selector: selector,
         test: function (value) {
-            var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            var regex = /^[a-zA-Z0-9]+$/;
             return regex.test(value) ? undefined :  message || 'Trường này phải là username';
         }
     };
