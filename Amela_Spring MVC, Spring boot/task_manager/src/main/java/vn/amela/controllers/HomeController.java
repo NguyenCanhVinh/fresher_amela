@@ -36,4 +36,14 @@ public class HomeController {
 
         return "register_success";
     }
+
+    @GetMapping("/403")
+    public String accessDenied() {
+        return "403";
+    }
+
+    @GetMapping("/login")
+    public String getLogin() {
+        return "login";
+    }
 }

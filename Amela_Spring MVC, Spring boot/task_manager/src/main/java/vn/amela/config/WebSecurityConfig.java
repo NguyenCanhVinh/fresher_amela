@@ -45,14 +45,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/task/list/paginated").authenticated()
-                .anyRequest().permitAll()
-                .and()
+                   .antMatchers("/task/list/paginated").authenticated()
+                   .anyRequest().permitAll()
+                   .and()
                 .formLogin()
-                .usernameParameter("username")
-                .defaultSuccessUrl("/task/list/paginated")
-                .permitAll()
-                .and()
+                    .loginPage("/login")
+                    .usernameParameter("username")
+                    .defaultSuccessUrl("/task/list/paginated")
+                    .permitAll()
+                    .and()
                 .logout().logoutSuccessUrl("/").permitAll();
     }
 
