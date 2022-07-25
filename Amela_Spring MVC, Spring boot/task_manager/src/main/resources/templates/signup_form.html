@@ -39,34 +39,6 @@
 
 
 </div>
-<!--<div class="container text-center">
-    <div>
-        <h1> Sign Up</h1>
-    </div>
-    <form th:action="@{/process_register}" th:object="${user}"
-          method="post" style="max-width: 600px; margin: 0 auto;">
-        <div class="m-3">
-            <div class="form-group row">
-                <label class="col-4 col-form-label">Username: </label>
-                <div class="col-8">
-                    <input type="text" th:field="*{username}" class="form-control" required />
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label class="col-4 col-form-label">Password: </label>
-                <div class="col-8">
-                    <input type="password" th:field="*{password}" class="form-control"
-                           required minlength="6" maxlength="10"/>
-                </div>
-            </div>
-
-            <div>
-                <button type="submit" class="btn btn-primary">Sign Up</button>
-            </div>
-        </div>
-    </form>
-</div>-->
 <script src="js/main.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -75,17 +47,14 @@
             formGroupSelector: '.form-group',
             errorSelector: '.form-message',
             rules: [
-                Validator.isRequired('#username', 'Vui lòng nhập tên ??y ?? c?a b?n'),
+                Validator.isRequired('#username', 'Vui lòng nhập tên đầy đủ'),
                 Validator.minLength('#password', 6),
                 Validator.isRequired('#password_confirmation'),
                 Validator.isConfirmed('#password_confirmation', function() {
                     return document.querySelector('#form-1 #password').value;
-                }, 'M?t kh?u nh?p l?i không chính xác')
+                }, 'Mật khẩu nhập không chính xác')
             ],
-            /*onSubmit: function(data) {
-                // Call API
-                console.log(data);
-            }*/
+
         });
         Validator({
             form: '#form-2',
@@ -94,10 +63,7 @@
             rules: [
                 Validator.minLength('#password', 6),
             ],
-            /*onSubmit: function(data) {
-                // Call API
-                console.log(data);
-            }*/
+
         });
     });
 </script>
