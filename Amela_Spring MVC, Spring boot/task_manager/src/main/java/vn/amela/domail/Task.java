@@ -21,4 +21,7 @@ public class Task {
     @Column(length = 500)
     private String description;
 
+    public Task(long i) {
+
+    }
 }

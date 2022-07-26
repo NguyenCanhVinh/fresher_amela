@@ -17,6 +17,9 @@ public class TaskServiceImpl implements TaskService {
     @Autowired
     private TaskRepository taskRepository;
 
+    public TaskServiceImpl(TaskRepository taskRepository) {
+    }
+
     @Override
     public List<Task> findAll() {
         return taskRepository.findAll();

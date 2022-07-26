@@ -15,4 +15,5 @@ public interface TaskRepository extends JpaRepository<Task,Long> {
 
         Page<Task> findByTitleContaining(String title, Pageable pageable);
 
+        Object findAll(String anyString);
 }
