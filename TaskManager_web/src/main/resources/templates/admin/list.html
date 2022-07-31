@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/dashboard.html}">
+
+<head>
+</head>
+
+<body>
+<div layout:fragment="content" class="container my-4"
+     style="min-height: 600px; border: 1px solid rgba(128, 128, 128, 0.212);">
+
+    <form action="#" method="get">
+        <button class="btn btn-primary float-right m-3">Thêm mới</button>
+    </form>
+    <div class="alert alert-success row col-12 ml-1" th:if="${message}"
+         th:text="${message}"></div>
+    <div class="alert alert-danger row col-12 ml-1" th:if="${error}"
+         th:text="${error}"></div>
+    <div class="row mt-5" th:if="${tasks.totalElements==0}">
+        <div class="col-12">
+            <h1 class="text-center">Không tìm thấy sản phẩm</h1>
+        </div>
+    </div>
+    <div style="display: flex">
+        <label class="mt-4 pt-1" style="max-width: 10%" th:unless="${tasks.totalElements==0}">Trạng thái:</label>
+        <form class="col-2 mt-4"  th:action="@{/task/page}"
+              method="get" th:unless="${tasks.totalElements==0}">
+            <input hidden="hidden" name="title" th:value="${title}" /> <input
+                hidden="hidden" name="page" th:value="0" /> <input
+                hidden="hidden" name="size" th:value="${tasks.size}" />
+            <select class="custom-select" onchange="this.form.submit()" name="brand"
+                    style="width: 85%">
+                <option th:selected="${brand==0}" value="0">Tất cả</option>
+                <option th:each="item : ${taskStatus}"
+                        th:value="${item.id}"
+                        th:selected="${brand==item.id}">[[${item.name}]]</option>
+            </select>
+        </form>
+    </div>
+
+    <table class="table table-bordered mt-3">
+        <thead>
+        <tr class="text-center">
+            <th>Tiêu đề</th>
+            <th>Trạng thái</th>
+            <th>Action</th>
+
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${tasks}">
+            <td th:text="${item.title}"></td>
+            <td th:text="${item.taskStatus.name}"></td>
+            <td width="30%" class="text-center">
+                <button class="btn btn-primary">Chi tiết</button>
+                <button  class="btn btn-primary">Chỉnh sửa</button>
+                <button  class="btn btn-danger">Xóa</button>
+            </td>
+
+
+
+        </tr>
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation example form-inline"
+         th:if="${tasks.totalElements>0}">
+        <ul class="pagination float-right ml-4">
+            <li class="page-item"><a class="page-link"
+                                     th:href="@{'/task/page?page=0&title='+${title}+'&size='+${tasks.size}+'&brand='+${brand==null?0:brand}}"><i
+                    class="fa fa-step-backward"></i></a></li>
+            <li class="page-item"><a class="page-link"
+                                     th:href="@{'/task/page?page='+${(tasks.number-1 < 0) ? 0 : tasks.number-1}+'&title='+${title}+'&size='+${tasks.size}+'&brand='+${brand==null?0:brand}}"><i
+                    class="fa fa-chevron-left"></i></a></li>
+            <li class="page-item"><a class="page-link"
+                                     th:href="@{'/task/page?page='+${(tasks.number+1 > tasks.totalPages-1) ? tasks.totalPages-1 : tasks.number+1}+'&title='+${title}+'&size='+${tasks.size}+'&brand='+${brand==null?0:brand}}"><i
+                    class="fa fa-chevron-right"></i></a></li>
+            <li class="page-item"><a class="page-link"
+                                     th:href="@{'/task/page?page='+${tasks.totalPages-1}+'&title='+${title}+'&size='+${tasks.size}+'&brand='+${brand==null?0:brand}}"><i
+                    class="fa fa-step-forward"></i></a></li>
+        </ul>
+
+        <form th:action="@{/task/page}" method="get"
+              class="float-right p-2" style="font-weight: 350;">
+            <input hidden="hidden" name="title" th:value="${title}" />
+            <input hidden="hidden" name="brand" th:value="${brand==null?0:brand}" />
+            <input hidden="hidden" name="page" th:value="0" />
+            <div class="form-inline">
+                <label>Hiển thị: </label> <select name="size"
+                                                  style="border: none; box-shadow: 0 0 1px gray; width: 50px; border-radius: 3px;"
+                                                  onchange="this.form.submit()">
+                <option th:selected="${tasks.size == 5}" value="5">5</option>
+                <option th:selected="${tasks.size == 10}" value="10">10</option>
+                <option th:selected="${tasks.size == 15}" value="15">15</option>
+            </select> <label> mục</label> <small class="ml-4 p-1">[[${tasks.number*tasks.size+1}]]-[[${(tasks.number*tasks.size+tasks.size
+                > tasks.totalElements) ? tasks.totalElements :
+                tasks.number*tasks.size+tasks.size}]] trong
+                [[${tasks.totalElements}]] mục</small>
+            </div>
+        </form>
+    </nav>
+</div>
+</body>
+
+</html>
