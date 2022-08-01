@@ -9,7 +9,22 @@
 <body>
 <div layout:fragment="content" class="container my-4"
      style="min-height: 600px; border: 1px solid rgba(128, 128, 128, 0.212);">
-
+    <div class="row mt-4 mb-2">
+        <div class="col-7 offset-2">
+            <form th:action="@{/task/search}" method="get"
+                  class="input-group">
+                <input hidden="hidden" name="size" th:value="${tasks.size}" />
+                <input type="text" class="form-control" placeholder="Tên task"
+                       name="title" th:value="${title}" aria-label="Recipient's title"
+                       aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button style="font-size: 13px;" class="btn btn-outline-secondary">
+                        <span class="fa fa-search"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
     <form action="#" method="get">
         <button class="btn btn-primary float-right m-3">Thêm mới</button>
     </form>
@@ -19,19 +34,19 @@
          th:text="${error}"></div>
     <div class="row mt-5" th:if="${tasks.totalElements==0}">
         <div class="col-12">
-            <h1 class="text-center">Không tìm thấy sản phẩm</h1>
+            <h3 class="text-center" style="color:red">Không tìm thấy task</h3>
         </div>
     </div>
     <div style="display: flex">
         <label class="mt-4 pt-1" style="max-width: 10%" th:unless="${tasks.totalElements==0}">Trạng thái:</label>
-        <form class="col-2 mt-4"  th:action="@{/task/page}"
+        <form class="col-3 mt-4"  th:action="@{/task/page}"
               method="get" th:unless="${tasks.totalElements==0}">
             <input hidden="hidden" name="title" th:value="${title}" /> <input
                 hidden="hidden" name="page" th:value="0" /> <input
                 hidden="hidden" name="size" th:value="${tasks.size}" />
             <select class="custom-select" onchange="this.form.submit()" name="brand"
                     style="width: 85%">
-                <option th:selected="${brand==0}" value="0">Tất cả</option>
+                <option th:selected="${brand==0}" value="0">All</option>
                 <option th:each="item : ${taskStatus}"
                         th:value="${item.id}"
                         th:selected="${brand==item.id}">[[${item.name}]]</option>
@@ -50,20 +65,57 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="item : ${tasks}">
+        <tr th:each="item : ${tasks}" class="text-center">
             <td th:text="${item.title}"></td>
             <td th:text="${item.taskStatus.name}"></td>
-            <td width="30%" class="text-center">
+            <td width="30%" >
                 <button class="btn btn-primary">Chi tiết</button>
                 <button  class="btn btn-primary">Chỉnh sửa</button>
-                <button  class="btn btn-danger">Xóa</button>
+                <button  class="btn btn-danger">
+                    <a th:data-id="${item.task_id}" th:data-name="${item.title}"
+                       style="cursor: pointer"
+                       onclick="showConfigModalDialog(this.getAttribute('data-id'),
+                       this.getAttribute('data-name'))">Xóa</a>
+
+                </button>
             </td>
-
-
-
         </tr>
         </tbody>
     </table>
+
+    <script>
+        function showConfigModalDialog(task_id, title) {
+            $('#taskTitle').text(title);
+            $('#yesOption').attr('href', '/task/delete/' + task_id);
+            $('#configmationId').modal('show');
+        }
+    </script>
+
+    <!-- Modal -->
+    <div class="modal" tabindex="-1" role="dialog" id="configmationId">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xác nhận</h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Bạn có muốn xoá task có tên "<span id="taskTitle"></span>"
+                        ?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <a id="yesOption" type="button" class="btn btn-danger">Có</a>
+                    <button type="button" class="btn btn-secondary"
+                            data-dismiss="modal">Không</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <nav aria-label="Page navigation example form-inline"
          th:if="${tasks.totalElements>0}">
