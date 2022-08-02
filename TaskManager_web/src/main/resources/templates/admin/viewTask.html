@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/dashboard.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div layout:fragment="content" class="container my-4"
+     style="min-height: 600px; border: 1px solid rgba(128, 128, 128, 0.212);">
+    <table class="table table-bordered mt-3">
+        <thead>
+        <tr class="text-center">
+            <th>Task Id</th>
+            <th>Tiêu đề</th>
+            <th>Nội dung</th>
+            <th>Trạng thái</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="text-center">
+            <td th:text="${task.task_id}" ></td>
+            <td th:text="${task.title}" ></td>
+            <td th:text="${task.description}"></td>
+            <td th:text="${task.taskStatus.name}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

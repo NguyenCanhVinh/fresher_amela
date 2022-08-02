@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/dashboard.html}">
+<head>
+</head>
+
+<body>
+<div layout:fragment="content" class="container my-4"
+     style="min-height: 600px; border: 1px solid rgba(128, 128, 128, 0.212);">
+    <div class="row">
+        <div class="col">
+            <form th:action="@{/task}" method="get">
+
+                <button class="btn btn-primary float-right m-3" >Danh sách task</button>
+            </form>
+
+        </div>
+    </div>
+    <div class="row">
+        <form th:action="@{/task/saveOrUpdate}" method="post" class="col" th:object="${task}">
+            <div class="row">
+                <div class="col-6 offset-3">
+                   <!-- <div class="form-group"  >
+                        <label for="task_id">Mã ID</label>
+                        <input type="text" class="form-control" name="task_id" id="task_id" th:field="*{task_id}"  >
+                    </div>-->
+                    <div class="form-group">
+                        <label for="title">Tiêu đề</label>
+                        <input type="text" class="form-control" id="title" th:field="*{title}">
+                       <!-- <small th:if="${#fields.hasErrors('name')}" class="text-danger">Hãy nhập đúng tên tiêu đề</small>
+                        <small th:if="${error}" th:text="${error}" class="text-danger"></small>-->
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Mô tả</label>
+                        <textarea class="form-control" name="description" th:field="*{description}"
+                                  id="description" rows="5"></textarea>
+                        <!--<small th:if="${#fields.hasErrors('desciption')}"
+                               class="text-danger">Hãy nhập mô tả task</small>-->
+                    </div>
+
+                   <div class="form-group" >
+                        <label for="taskStatus_id">Trạng thái</label>
+                            <select class="form-control" name="taskStatus_id" id="taskStatus_id">
+                                <option th:each="item : ${taskStatuses}"
+                                        th:value="${item.id}"
+                                        th:utext="${item.name}"
+                                       />
+
+                            </select>
+                         <!--  &lt;!&ndash;&lt;!&ndash; <p class="text-red" th:if="${#fields.hasErrors('productTypeId')}" th:errors="*{productTypeId}"></p>&ndash;&gt;&ndash;&gt;-->
+                    </div>
+                </div>
+
+            </div>
+          <div class="row">
+                <div class="col-6 offset-3">
+                   <!-- <input type="hidden" name="edit" th:field="*{edit}" />
+                    <button class="btn btn-primary">
+                        <span th:if="${category.isEdit}">Sửa</span>
+                        <span th:if="${!category.isEdit}">Thêm</span>
+                    </button>-->
+                    <button class="btn btn-primary">
+                       Thêm
+                    </button>
+                  <!--  <button class="btn btn-success ml-2" formaction="/admin/categories/reset" formmethod="post">Làm mới</button>-->
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+
