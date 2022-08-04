@@ -11,7 +11,11 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.supercsv.io.CsvBeanWriter;
+import org.supercsv.io.ICsvBeanWriter;
+import org.supercsv.prefs.CsvPreference;
 import vn.amela.fresher.entity.Task;
 import vn.amela.fresher.entity.TaskStatus;
 import vn.amela.fresher.model.TaskDto;
@@ -20,7 +24,12 @@ import vn.amela.fresher.repository.TaskRepository;
 import vn.amela.fresher.repository.TaskStatusRepository;
 import vn.amela.fresher.service.TaskService;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -35,6 +44,9 @@ public class TaskController {
     @Autowired
     TaskStatusRepository taskStatusRepository;
 
+    @Autowired
+    TaskService taskService;
+
     @RequestMapping("")
     public ModelAndView list(ModelMap model) {
         Pageable pageable = PageRequest.of(0, 5);
@@ -43,18 +55,15 @@ public class TaskController {
         model.addAttribute("tasks", list);
         List<TaskStatus> listC = taskStatusRepository.findAll();
         model.addAttribute("taskStatus", listC);
-        // set active front-end
-        model.addAttribute("menuP", "menu");
+
         return new ModelAndView("admin/list", model);
-
-
     }
 
     @GetMapping("/page")
     public ModelAndView page(ModelMap model, @RequestParam("page") Optional<Integer> page,
-                             @RequestParam(value = "title", required = false) String title,
-                             @RequestParam("size") Optional<Integer> size,
-                             @RequestParam("brand") Optional<Long> brandPage) {
+                                             @RequestParam(value = "title", required = false) String title,
+                                             @RequestParam("size") Optional<Integer> size,
+                                             @RequestParam("brand") Optional<Long> brandPage) {
 
         int currentPage = page.orElse(0);
         int pageSize = size.orElse(5);
@@ -62,11 +71,9 @@ public class TaskController {
         if (title.equalsIgnoreCase("null")) {
             title = "";
         }
+
         Long brand = brandPage.orElse(0L);
-
         Pageable pageable = PageRequest.of(currentPage, pageSize);
-
-
         Page<Task> list = null;
 
         if (brand == 0) {
@@ -115,90 +122,72 @@ public class TaskController {
         return new ModelAndView("forward:/task", model);
     }
 
+    @GetMapping("/viewtask/{task_id}")
+    public String viewProduct(@PathVariable long task_id, Model model){
 
-    /* @PostMapping("/saveOrUpdate")
-     public ModelAndView saveOrUpdate(ModelMap model, TaskDto dto){
+        model.addAttribute("task",taskRepository.findById(task_id).get());
 
-         Task entity= new Task();
-         BeanUtils.copyProperties(dto,entity);
-         taskRepository.save(entity);
+        return "admin/viewTask";
+    }
 
-         List<TaskStatus> listC = taskStatusRepository.findAll();
-         model.addAttribute("taskStatus", listC);
-
-         model.addAttribute("message", "Lưu task thanh cong");
-         return new ModelAndView("forward:/task", model);
-
-     }*/
     @GetMapping("/add")
-    public String add(Task task, Model model) {
+    public String add(ModelMap model, Task task){
+        task.setTaskStatus(new TaskStatus());
         model.addAttribute("task", task);
-        List<TaskStatus> taskStatuses = taskStatusRepository.findAll();
-        model.addAttribute("taskStatuses", taskStatuses);
 
         return "admin/addTask";
     }
 
     @PostMapping("/saveOrUpdate")
-    public ModelAndView saveOrUpdate(ModelMap model,@Valid @ModelAttribute("product") TaskDto dto,
-                                     BindingResult result) {
-        /*model.addAttribute("task", task);*/
-        /*List<TaskStatus> taskStatuses = taskStatusRepository.findAll();
-        model.addAttribute("taskStatuses", taskStatuses);*/
+    public String saveProduct(ModelMap model, @Valid @ModelAttribute("task") Task task, BindingResult result){
 
-        if (result.hasErrors()) {
-            return new ModelAndView("admin/addTask");
+        model.addAttribute("task", task);
+        if(result.hasErrors()){
+            return "admin/addTask";
         }
-
-        Task entity= new Task();
-        BeanUtils.copyProperties(dto, entity);
-
-        TaskStatus taskStatus= new TaskStatus();
-        taskStatus.setId(dto.getTaskStatus_id());
-        entity.setTaskStatus(taskStatus);
-        taskRepository.save(entity);
-
-        model.addAttribute("message", "task is saved");
-        return new ModelAndView("forward:/task", model);
+        taskRepository.save(task);
+        return "redirect:/task";
     }
 
-   @GetMapping("/edit/{task_id}")
-    public ModelAndView edit(ModelMap model, @PathVariable(name = "task_id") Long task_id) {
+    @GetMapping("/edit/{task_id}")
+    public ModelAndView edit(@PathVariable("task_id") Long task_id, ModelMap model) {
 
         Optional<Task> opt = taskRepository.findById(task_id);
-        TaskDto dto = new TaskDto();
         if (opt.isPresent()) {
-            Task entity = opt.get();
-
-            BeanUtils.copyProperties(entity, dto);
-            List<TaskStatus> taskStatuses = taskStatusRepository.findAll();
-            dto.setTaskStatus_id(entity.getTaskStatus().getId());
-            dto.setIsEdit(true);
-            return new ModelAndView( "admin/addTask", model);
+            model.addAttribute("task",opt.get());
+            model.addAttribute("message", "Cập nhật thành công!");
+        } else {
+            return list(model);
         }
-
-        model.addAttribute("message", "Sửa thành công!");
-        return new ModelAndView("forward:/task", model);
+        return new ModelAndView("admin/editTask", model);
     }
 
-    @ModelAttribute("taskStatuses")
-    public List<TaskStatusDto> getTaskStatus() {
-        return taskStatusRepository.findAll().stream().map(item -> {
-            TaskStatusDto dto = new TaskStatusDto();
-            BeanUtils.copyProperties(item, dto);
-            return dto;
-        }).collect(Collectors.toList());
+    @ModelAttribute("TaskStatus")
+    public List<TaskStatus> getTaskStatus() {
+        return taskService.findAllTasks();
     }
 
-    @GetMapping("/viewtask/{task_id}")
-    public String viewProduct(@PathVariable long task_id, Model model){
+    @GetMapping("/export")
+    public void exportToCSV(HttpServletResponse response) throws IOException {
+        response.setContentType("text/csv");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+        String currentDateTime = dateFormatter.format(new Date());
 
-        model.addAttribute("task",taskRepository.findById(task_id).get());
-        return "admin/viewTask";
-    } //view product Details
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=task_" + currentDateTime + ".csv";
+        response.setHeader(headerKey, headerValue);
 
+        List<Task> listTask = taskRepository.findAll();
 
+        ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
+        String[] csvHeader = {"Task_Id", "title", " description"};
+        String[] nameMapping = {"task_id", "title", "description"};
 
+        csvWriter.writeHeader(csvHeader);
 
-
+        for (Task task : listTask) {
+            csvWriter.write(task, nameMapping);
+        }
+        csvWriter.close();
+    }
 }

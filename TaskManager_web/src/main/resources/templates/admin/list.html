@@ -28,6 +28,10 @@
     <form th:action="@{/task/add}" method="get">
         <button class="btn btn-primary float-right m-3">Thêm mới</button>
     </form>
+    <a th:href="@{/task/export}">
+        <button type="button" class="btn btn-success float-right m-3" >
+            <i class="fa fa-plus"></i>&nbsp;Export to CSV
+        </button></a>
     <div class="alert alert-success row col-12 ml-1" th:if="${message}"
          th:text="${message}"></div>
     <div class="alert alert-danger row col-12 ml-1" th:if="${error}"

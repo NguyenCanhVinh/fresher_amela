@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -24,4 +23,5 @@ public class TaskStatus implements Serializable {
 
     @OneToMany(mappedBy = "taskStatus", cascade = CascadeType.ALL)
     private List<Task> tasks;
+
 }

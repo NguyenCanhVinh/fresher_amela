@@ -23,6 +23,7 @@ public class TaskDto implements Serializable {
 
     private Long taskStatus_id;
 
-    private Boolean isEdit = false;
+    private boolean isEdit = false;
+
 
 }

@@ -17,5 +17,5 @@ public class TaskStatusDto implements Serializable {
     @NotEmpty
     @Size(min = 5, max = 10)
     private String name;
-    private Boolean isEdit = false;
+    private boolean isEdit = false;
 }

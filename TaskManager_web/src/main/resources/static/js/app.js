@@ -8,3 +8,15 @@ function readURL(input) {
         reader.readAsDataURL(input.files[0]);
     }
 }
+
+$(document).ready(() => {
+    const deleteBtn = $("#delete-btn")
+    deleteBtn.click(() => addClickEvent())
+})
+
+function addClickEvent(){
+    $(".popup").css("display", "block")
+    $("#cancel-delete").click(() => {
+        $(".popup").css("display", "none")
+    })
+}
