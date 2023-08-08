@@ -33,4 +33,7 @@ public class User implements Serializable {
     @NotBlank(message = "Name không được trống")
     @Length(min = 3, max = 100, message = "Name phải từ 3 đến 100 kí tự!")
     private String name;
+
+    @Pattern(regexp = "")
+    private String email;
 }

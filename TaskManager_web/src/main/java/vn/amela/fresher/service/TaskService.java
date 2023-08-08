@@ -14,4 +14,12 @@ public interface TaskService {
     List<Task> findAll();
 
     List<TaskStatus> findAllTasks();
+
+    List<Task> findByTitleContaining(String title, Long task_id) ;
+
+    void save(Task task);
+
+     void update(Task task) ;
+
+    void delete(Long task_id);
 }

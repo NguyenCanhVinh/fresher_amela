@@ -6,11 +6,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import vn.amela.fresher.entity.User;
+import vn.amela.fresher.model.UserDto;
 import vn.amela.fresher.repository.UserRepository;
+import vn.amela.fresher.service.UserService;
 
 import javax.validation.Valid;
 
@@ -19,26 +23,29 @@ import javax.validation.Valid;
 public class UserController {
 
     @Autowired
-    private UserRepository userRepo;
+    private UserService userService;
 
 
     @GetMapping("/register")
-    public String showRegistrationForm(Model model) {
-        model.addAttribute("user", new User());
+    public String showRegistrationForm(@ModelAttribute UserDto userDto, ModelMap model) {
+        model.addAttribute("userDto",userDto);;
 
         return "admin/signup_form";
     }
 
     @PostMapping("/process_register")
-    public String processRegister(@Valid @ModelAttribute("user") User user,  BindingResult result) {
+    public String processRegister(ModelMap model, @Valid @ModelAttribute("userDto") UserDto userDto, BindingResult result, RedirectAttributes ra) {
+        if (userDto.getPassword()!= null && userDto.getRpassword() !=null){
+            if (!userDto.getPassword().equals(userDto.getRpassword())){
+                result.addError(new FieldError("userDto", "rpassword",
+                        "Password chưa chính xác"));
+            }
+        }
         if (result.hasErrors()){
             return "admin/signup_form";
         }
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
-        userRepo.save(user);
-
+        ra.addAttribute("message","Sucess, Bạn đăng ký thành công");
+        userService.register(userDto);
         return "admin/login";
     }
 

@@ -3,13 +3,6 @@
 
 <mapper namespace="vn.amela.fresher.mapper.TaskMapper">
 
-    <resultMap id="mapResult" type="vn.amela.fresher.entity.Task">
-        <result property="id" column="id"/>
-        <result property="title" column="title"/>
-        <result property="description" column="description"/>
-        <result property="TaskStatus" column="TaskStatus"/>
-    </resultMap>
-
     <select id="findAll" resultType="vn.amela.fresher.entity.Task" >
         SELECT * FROM tasks
     </select>
@@ -18,5 +11,33 @@
         SELECT * FROM tasks WHERE title LIKE '%' #{title} '%' AND task_id = #{task_id}
     </select>
 
+    <select id="findByTitleContainingPaged" resultType="vn.amela.fresher.entity.Task" >
+        SELECT * FROM tasks WHERE title LIKE '%' #{title} '%' AND task_id = #{task_id}
+        <if test="page.paged">
+            limit #{page.offset}, #{page.pageSize}
+        </if>
+    </select>
+
+    <insert id="save">
+        INSERT INTO tasks (task_id,title, description, id)
+        VALUES (
+                   #{tasks.task_id},
+                   #{tasks.title},
+                   #{tasks.description},
+                   #{tasks.id}
+               )
+    </insert>
+
+    <insert id="update">
+        UPDATE task SET
+                        title = #{tasks.title},
+                        description = #{task.description},
+                        id = #{tasks.id}
+        WHERE task_id = #{tasks.task_id}
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM tasks WHERE task_id = #{task_id}
+    </delete>
 
 </mapper>

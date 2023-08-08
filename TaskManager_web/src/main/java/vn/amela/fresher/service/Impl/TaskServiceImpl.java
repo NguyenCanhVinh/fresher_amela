@@ -38,4 +38,20 @@ public class TaskServiceImpl implements TaskService {
     public List<Task> findAll() {
         return taskMapper.findAll();
     }
+
+    public List<Task> findByTitleContaining(String title, Long task_id) {
+        return taskMapper.findByTitleContaining(title, task_id);
+    }
+
+    public void save(Task task) {
+        taskMapper.save(task);
+    }
+
+    public void update(Task task) {
+        taskMapper.update(task);
+    }
+
+    public void delete(Long task_id) {
+        taskMapper.delete(task_id);
+    }
 }
